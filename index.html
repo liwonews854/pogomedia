@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>POGO | 獨立調茶局</title>
+  <style>
+    :root {
+      --bg: #0d0f12;
+      --card-bg: #16191e;
+      --text: #f0f3f6;
+      --muted: #8b949e;
+      --accent: #38bdf8;
+      --border: #262b33;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      padding: 20px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    header {
+      padding: 40px 0 20px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 40px;
+    }
+    .logo-container {
+      display: flex;
+      align-items: baseline;
+      gap: 12px;
+    }
+    .logo-main {
+      font-size: 2.2rem;
+      font-weight: 900;
+      letter-spacing: 2px;
+      color: var(--accent);
+    }
+    .logo-sub {
+      font-size: 1.2rem;
+      color: var(--muted);
+      font-weight: 500;
+    }
+    .slogan {
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+    .grid {
+      display: grid;
+      gap: 24px;
+    }
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+      transition: border-color 0.2s;
+    }
+    .card:hover { border-color: var(--accent); }
+    .card-tag {
+      display: inline-block;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 8px;
+    }
+    .card-title {
+      font-size: 1.4rem;
+      margin-bottom: 12px;
+      color: var(--text);
+    }
+    .card-desc {
+      color: var(--muted);
+      font-size: 0.95rem;
+      margin-bottom: 16px;
+    }
+    .card-date {
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+    footer {
+      margin-top: 60px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border);
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo-container">
+      <div class="logo-main">POGO</div>
+      <div class="logo-sub">獨立調茶局</div>
+    </div>
+    <div class="slogan">追蹤真相，細品話題 — 獨立報導與深度調查新聞平台</div>
+  </header>
+
+  <main class="grid">
+    <article class="card">
+      <span class="card-tag">創刊號 / 發刊詞</span>
+      <h2 class="card-title">歡迎來到 POGO 獨立調茶局</h2>
+      <p class="card-desc">這是我們的第一篇文章！POGO 獨立調茶局正式上線，未來將在這裡發布深度報導、主題專題與獨立觀點文章。敬請期待更多內容。</p>
+      <div class="card-date">2026 年 10 月 4 日</div>
+    </article>
+  </main>
+
+  <footer>
+    <p>&copy; 2026 POGO 獨立調茶局. All rights reserved.</p>
+  </footer>
+</body>
+</html>
