@@ -1,119 +1,491 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>POGO | 獨立調茶局</title>
-  <style>
-    :root {
-      --bg: #0d0f12;
-      --card-bg: #16191e;
-      --text: #f0f3f6;
-      --muted: #8b949e;
-      --accent: #38bdf8;
-      --border: #262b33;
-    }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      font-family: system-ui, -apple-system, sans-serif;
-      background-color: var(--bg);
-      color: var(--text);
-      line-height: 1.6;
-      padding: 20px;
-      max-width: 900px;
-      margin: 0 auto;
-    }
-    header {
-      padding: 40px 0 20px;
-      border-bottom: 1px solid var(--border);
-      margin-bottom: 40px;
-    }
-    .logo-container {
-      display: flex;
-      align-items: baseline;
-      gap: 12px;
-    }
-    .logo-main {
-      font-size: 2.2rem;
-      font-weight: 900;
-      letter-spacing: 2px;
-      color: var(--accent);
-    }
-    .logo-sub {
-      font-size: 1.2rem;
-      color: var(--muted);
-      font-weight: 500;
-    }
-    .slogan {
-      margin-top: 8px;
-      color: var(--muted);
-      font-size: 0.95rem;
-    }
-    .grid {
-      display: grid;
-      gap: 24px;
-    }
-    .card {
-      background: var(--card-bg);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 24px;
-      transition: border-color 0.2s;
-    }
-    .card:hover { border-color: var(--accent); }
-    .card-tag {
-      display: inline-block;
-      font-size: 0.75rem;
-      font-weight: 700;
-      color: var(--accent);
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      margin-bottom: 8px;
-    }
-    .card-title {
-      font-size: 1.4rem;
-      margin-bottom: 12px;
-      color: var(--text);
-    }
-    .card-desc {
-      color: var(--muted);
-      font-size: 0.95rem;
-      margin-bottom: 16px;
-    }
-    .card-date {
-      font-size: 0.8rem;
-      color: var(--muted);
-    }
-    footer {
-      margin-top: 60px;
-      padding-top: 20px;
-      border-top: 1px solid var(--border);
-      text-align: center;
-      color: var(--muted);
-      font-size: 0.85rem;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>POGO | 獨立調茶局 - 深入調查，還原真相</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            red: '#cc0000',
+                            dark: '#111827',
+                            gray: '#f3f4f6'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* 跑馬燈動畫 */
+        @keyframes marquee {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+        .animate-marquee {
+            display: inline-block;
+            white-space: nowrap;
+            animation: marquee 25s linear infinite;
+        }
+        .animate-marquee:hover {
+            animation-play-state: paused;
+        }
+    </style>
 </head>
-<body>
-  <header>
-    <div class="logo-container">
-      <div class="logo-main">POGO</div>
-      <div class="logo-sub">獨立調茶局</div>
+<body class="bg-gray-100 text-gray-900 font-sans antialiased flex flex-col min-h-screen">
+
+    <!-- 1. 頂部新聞快報跑馬燈 (類似 TVBS / 東森 樣式) -->
+    <div class="bg-brand-red text-white text-xs md:text-sm py-1.5 px-4 flex items-center shadow-inner overflow-hidden">
+        <span class="bg-black text-white font-bold px-2 py-0.5 rounded text-xs shrink-0 mr-3 z-10 flex items-center gap-1">
+            <i class="fa-solid fa-bolt text-yellow-400"></i> 快訊
+        </span>
+        <div class="overflow-hidden w-full relative h-5">
+            <div id="marquee-text" class="animate-marquee absolute whitespace-nowrap">
+                載入即時新聞中...
+            </div>
+        </div>
     </div>
-    <div class="slogan">追蹤真相，細品話題 — 獨立報導與深度調查新聞平台</div>
-  </header>
 
-  <main class="grid">
-    <article class="card">
-      <span class="card-tag">創刊號 / 發刊詞</span>
-      <h2 class="card-title">歡迎來到 POGO 獨立調茶局</h2>
-      <p class="card-desc">這是我們的第一篇文章！POGO 獨立調茶局正式上線，未來將在這裡發布深度報導、主題專題與獨立觀點文章。敬請期待更多內容。</p>
-      <div class="card-date">2026 年 10 月 4 日</div>
-    </article>
-  </main>
+    <!-- 2. 主標題 Header (電腦/手機響應式) -->
+    <header class="bg-white border-b border-gray-200 sticky top-0 z-40 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16 md:h-20">
+                <!-- LOGO 區 -->
+                <div class="flex items-center space-x-3 cursor-pointer" onclick="filterCategory('all')">
+                    <div class="bg-black text-white font-black text-2xl md:text-3xl px-2.5 py-1 tracking-tighter rounded">
+                        POGO
+                    </div>
+                    <div>
+                        <div class="text-lg md:text-xl font-bold leading-none tracking-wide text-gray-900">獨立調茶局</div>
+                        <div class="text-[10px] md:text-xs text-brand-red font-semibold tracking-wider mt-0.5">INDEPENDENT INVESTIGATION</div>
+                    </div>
+                </div>
 
-  <footer>
-    <p>&copy; 2026 POGO 獨立調茶局. All rights reserved.</p>
-  </footer>
+                <!-- 搜尋列 (電腦版) -->
+                <div class="hidden md:flex flex-1 max-w-md mx-8">
+                    <div class="relative w-full">
+                        <input type="text" id="search-input-desktop" oninput="handleSearch(this.value)" placeholder="搜尋新聞、關鍵字或記者..." 
+                            class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-brand-red focus:border-transparent transition">
+                        <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-2.5 text-gray-400 text-sm"></i>
+                    </div>
+                </div>
+
+                <!-- 網頁日期與時間 -->
+                <div class="hidden lg:block text-right text-xs text-gray-500">
+                    <div id="current-date" class="font-medium"></div>
+                    <div class="text-gray-400">調茶即時新聞網</div>
+                </div>
+            </div>
+
+            <!-- 搜尋列 (手機版) -->
+            <div class="pb-3 md:hidden">
+                <div class="relative w-full">
+                    <input type="text" id="search-input-mobile" oninput="handleSearch(this.value)" placeholder="搜尋新聞、關鍵字..." 
+                        class="w-full pl-9 pr-4 py-1.5 border border-gray-300 rounded-full text-xs focus:outline-none focus:ring-2 focus:ring-brand-red">
+                    <i class="fa-solid fa-magnifying-glass absolute left-3 top-2 text-gray-400 text-xs"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- 分類標籤選單 bar -->
+        <nav class="bg-gray-900 text-white border-t border-gray-800">
+            <div class="max-w-7xl mx-auto px-2 overflow-x-auto whitespace-nowrap scrollbar-hide">
+                <div class="flex space-x-1 py-1" id="category-nav">
+                    <!-- 分類動態生成 -->
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- 3. 主要內容區域 -->
+    <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 w-full">
+
+        <!-- 文章檢視 View (單篇文章閱讀模式) -->
+        <div id="single-article-view" class="hidden bg-white rounded-lg shadow-sm p-4 md:p-8 max-w-4xl mx-auto border border-gray-200">
+            <button onclick="closeArticle()" class="mb-4 inline-flex items-center text-sm font-medium text-brand-red hover:underline">
+                <i class="fa-solid fa-arrow-left mr-2"></i> 返回新聞列表
+            </button>
+            <div id="article-detail-content">
+                <!-- 內容動態注入 -->
+            </div>
+        </div>
+
+        <!-- 列表檢視 View (新聞首頁/分類列表) -->
+        <div id="news-list-view">
+            <!-- 搜尋狀態提示 -->
+            <div id="search-status" class="hidden mb-4 p-3 bg-blue-50 border border-blue-200 text-blue-800 text-sm rounded-lg flex justify-between items-center">
+                <span>搜尋結果：<strong id="search-keyword"></strong></span>
+                <button onclick="clearSearch()" class="text-xs text-blue-600 hover:underline">清除搜尋</button>
+            </div>
+
+            <!-- 巨幅頭條新聞 (僅在首頁全覽時顯示) -->
+            <section id="hero-section" class="mb-8">
+                <!-- 頭條動態注入 -->
+            </section>
+
+            <!-- 主要文章區域 (雙欄版面) -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- 左側：最新新聞列表 (2欄寬) -->
+                <div class="lg:col-span-2 space-y-6" id="main-articles-list">
+                    <!-- 文章列表注入 -->
+                </div>
+
+                <!-- 右側：側邊欄 (側欄焦點、熱門標籤) -->
+                <aside class="space-y-6">
+                    <!-- 熱門新聞排行 -->
+                    <div class="bg-white p-5 rounded-lg border border-gray-200 shadow-sm">
+                        <h3 class="text-base font-bold text-gray-900 border-b-2 border-brand-red pb-2 mb-4 flex items-center justify-between">
+                            <span><i class="fa-solid fa-fire text-brand-red mr-2"></i>發燒焦點</span>
+                            <span class="text-xs font-normal text-gray-400">HOT NEWS</span>
+                        </h3>
+                        <ol class="space-y-3" id="trending-list">
+                            <!-- 熱門排行注入 -->
+                        </ol>
+                    </div>
+
+                    <!-- 標籤雲區塊 -->
+                    <div class="bg-white p-5 rounded-lg border border-gray-200 shadow-sm">
+                        <h3 class="text-base font-bold text-gray-900 border-b-2 border-gray-800 pb-2 mb-4">
+                            <i class="fa-solid fa-tags text-gray-600 mr-2"></i>熱門話題標籤
+                        </h3>
+                        <div class="flex flex-wrap gap-2" id="tag-cloud">
+                            <!-- 標籤注入 -->
+                        </div>
+                    </div>
+                </aside>
+            </div>
+        </div>
+    </main>
+
+    <!-- 4. 頁尾 Footer -->
+    <footer class="bg-gray-900 text-gray-400 border-t border-gray-800 mt-12 text-sm">
+        <div class="max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-4 border-b border-gray-800 pb-6">
+                <div class="flex items-center space-x-2">
+                    <span class="bg-white text-black font-black px-2 py-0.5 text-lg rounded">POGO</span>
+                    <span class="text-white font-bold text-lg">獨立調茶局</span>
+                </div>
+                <div class="text-xs text-center md:text-right">
+                    <p>追求真實．深入調查．不畏強權</p>
+                    <p class="mt-1 text-gray-500">本平台所有內容採獨立運作，力求客觀公正。</p>
+                </div>
+            </div>
+            <div class="pt-6 text-center text-xs text-gray-500">
+                &copy; 2026 POGO 獨立調茶局. All rights reserved. 託管於 Vercel / GitHub Pages.
+            </div>
+        </div>
+    </footer>
+
+    <!-- 核心數據庫與應用程式邏輯 (無須資料庫) -->
+    <script>
+        // 文章資料庫 (未來直接新增物件至此陣列即可發布新聞)
+        const articles = [
+            {
+                id: 1,
+                title: "【獨家調查】揭開茶飲市場隱藏的供應鏈秘密：標示與實質原料差距有多大？",
+                category: "深度調查",
+                author: "調茶局特約記者 張立專",
+                date: "2026-10-05 09:30",
+                summary: "本局費時三個月調閱進出口數據與檢驗報告，發現市面上多款宣稱產地直送的茶葉，其實經過多次轉手與混茶。我們帶您一探業界公開的秘密。",
+                content: `
+                    <p class="mb-4">在當前手搖飲與茶包市場競爭激烈的環境下，許多品牌皆主打「產地直送」、「嚴選好茶」。然而，《POGO 獨立調茶局》經過長達三個月的實地追蹤與產地比對，發現背後供應鏈存在顯著資訊不對稱。</p>
+                    <h3 class="text-xl font-bold my-3 text-gray-800">產地標示與混茶的灰色地帶</h3>
+                    <p class="mb-4">根據現行法規，食品包裝上的原產地標示通常依據「最終實質轉型」或成分佔比判定。這導致部分業者將進口茶葉與少許本土茶葉混合後，依然在宣傳物上主打台灣在地特色，誤導消費者期待。</p>
+                    <blockquote class="border-l-4 border-brand-red pl-4 py-2 italic bg-gray-50 my-4 text-gray-700">
+                        「業界混茶是為了維持風味穩定與成本控制，但問題在於行銷手法是否過度包裝與誇大。」一位不願具名的茶業專家表示。
+                    </blockquote>
+                    <p class="mb-4">我們倡議相關單位應更加落實產地履歷透明化，並呼籲消費者在選購時關注詳細標示，而非僅看行銷口號。</p>
+                `,
+                image: "https://images.unsplash.com/photo-1576092768241-dec231879fc3?auto=format&fit=crop&w=1000&q=80",
+                tags: ["茶葉調查", "消費者權益", "獨家", "食品安全"],
+                views: 12450,
+                isHero: true
+            },
+            {
+                id: 2,
+                title: "數位新聞的未來：獨立媒體如何突破演算法包圍？",
+                category: "傳播趨勢",
+                author: "新聞觀察員 林心怡",
+                date: "2026-10-04 16:20",
+                summary: "社群平台觸及率持續下滑，獨立媒體必須尋求獨立於主流演算法之外的生存之道，讀者直接訂閱與自建平台成為新趨勢。",
+                content: `<p class="mb-4">過往依賴大型社群媒體帶來流量的模式已不可行。現在越來越多的獨立新聞機構開始轉向 RSS、電子報以及輕量化的個人網站，直接建立與讀者的信任關係。</p>`,
+                image: "https://images.unsplash.com/photo-1504711434969-e33886168f5c?auto=format&fit=crop&w=800&q=80",
+                tags: ["獨立媒體", "媒體趨勢", "數位傳播"],
+                views: 8320,
+                isHero: false
+            },
+            {
+                id: 3,
+                title: "【專訪】當AI開始寫新聞：線上記者的倫理與真實性堅守",
+                category: "科技現場",
+                author: "資深記者 陳健",
+                date: "2026-10-03 11:00",
+                summary: "AI 工具的快速發展讓新聞產出效率提升數倍，但查證事實與查核源頭的工作，依然需要人類記者的專業直覺。",
+                content: `<p class="mb-4">生成式AI在整理資料與草擬新聞稿表現優異，但《POGO 獨立調茶局》強調：現場採訪、親眼見證與查核事實是AI無法取代的核心價值。</p>`,
+                image: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?auto=format&fit=crop&w=800&q=80",
+                tags: ["AI新聞", "新聞倫理", "科技"],
+                views: 5410,
+                isHero: false
+            },
+            {
+                id: 4,
+                title: "氣候變遷衝擊高山茶產區 採收期異常延後",
+                category: "環境氣候",
+                author: "特派員 廖偉強",
+                date: "2026-10-02 14:15",
+                summary: "今年氣溫異常升高與降雨分佈不均，導致高海拔茶區採收步調被打亂，茶農面臨產量降縮與品質維護雙重挑戰。",
+                content: `<p class="mb-4">根據氣象統計，今年極端氣候頻率增加，極度依賴特定氣候條件的高山茶種首當其衝。</p>`,
+                image: "https://images.unsplash.com/photo-1586985289688-ca3cf47d3e6e?auto=format&fit=crop&w=800&q=80",
+                tags: ["氣候變遷", "農業", "環境"],
+                views: 3920,
+                isHero: false
+            }
+        ];
+
+        // 全域狀態
+        let currentCategory = 'all';
+        let searchQuery = '';
+
+        // 初始化頁面
+        document.addEventListener('DOMContentLoaded', () => {
+            updateDate();
+            renderCategoryNav();
+            renderArticles();
+            renderMarquee();
+            renderTrending();
+            renderTagCloud();
+        });
+
+        // 1. 顯示當前日期
+        function updateDate() {
+            const now = new Date();
+            const options = { year: 'numeric', month: 'long', day: 'numeric', weekday: 'long' };
+            document.getElementById('current-date').innerText = now.toLocaleDateString('zh-TW', options);
+        }
+
+        // 2. 渲染分類導覽列
+        function renderCategoryNav() {
+            const categories = ['全部', '深度調查', '傳播趨勢', '科技現場', '環境氣候'];
+            const navContainer = document.getElementById('category-nav');
+            
+            navContainer.innerHTML = categories.map(cat => {
+                const catValue = cat === '全部' ? 'all' : cat;
+                const activeClass = currentCategory === catValue 
+                    ? 'bg-brand-red text-white font-bold' 
+                    : 'text-gray-300 hover:bg-gray-800 hover:text-white';
+                return `<button onclick="filterCategory('${catValue}')" class="px-4 py-1.5 rounded-md text-sm transition ${activeClass}">${cat}</button>`;
+            }).join('');
+        }
+
+        // 3. 渲染新聞跑馬燈
+        function renderMarquee() {
+            const marqueeText = articles.map(a => `【${a.category}】${a.title}`).join(' &nbsp;&nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp;&nbsp; ');
+            document.getElementById('marquee-text').innerHTML = marqueeText;
+        }
+
+        // 4. 核心：過濾與渲染文章
+        function renderArticles() {
+            let filtered = articles;
+
+            // 標籤/分類過濾
+            if (currentCategory !== 'all') {
+                filtered = filtered.filter(a => a.category === currentCategory || a.tags.includes(currentCategory));
+            }
+
+            // 關鍵字搜尋過濾
+            if (searchQuery.trim() !== '') {
+                const q = searchQuery.toLowerCase();
+                filtered = filtered.filter(a => 
+                    a.title.toLowerCase().includes(q) || 
+                    a.summary.toLowerCase().includes(q) ||
+                    a.author.toLowerCase().includes(q) ||
+                    a.tags.some(t => t.toLowerCase().includes(q))
+                );
+            }
+
+            // 首頁頭條區塊渲染 (若有搜尋或非首頁分類則隱藏頭條專區)
+            const heroSection = document.getElementById('hero-section');
+            const heroArticle = articles.find(a => a.isHero) || articles[0];
+
+            if (currentCategory === 'all' && searchQuery === '' && heroArticle) {
+                heroSection.classList.remove('hidden');
+                heroSection.innerHTML = `
+                    <div onclick="openArticle(${heroArticle.id})" class="cursor-pointer group bg-white rounded-xl overflow-hidden shadow-md border border-gray-200 grid grid-cols-1 md:grid-cols-12 hover:shadow-lg transition">
+                        <div class="md:col-span-7 overflow-hidden h-64 md:h-96">
+                            <img src="${heroArticle.image}" alt="${heroArticle.title}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                        </div>
+                        <div class="md:col-span-5 p-6 md:p-8 flex flex-col justify-between">
+                            <div>
+                                <div class="flex items-center space-x-2 mb-3">
+                                    <span class="bg-brand-red text-white text-xs font-bold px-2.5 py-1 rounded">${heroArticle.category}</span>
+                                    <span class="text-xs text-gray-500"><i class="fa-regular fa-clock mr-1"></i>${heroArticle.date}</span>
+                                </div>
+                                <h2 class="text-2xl md:text-3xl font-extrabold text-gray-900 group-hover:text-brand-red transition mb-4 leading-tight">
+                                    ${heroArticle.title}
+                                </h2>
+                                <p class="text-gray-600 text-sm md:text-base line-clamp-3 mb-4">
+                                    ${heroArticle.summary}
+                                </p>
+                            </div>
+                            <div class="flex items-center justify-between text-xs text-gray-500 pt-4 border-t border-gray-100">
+                                <span><i class="fa-solid fa-user-pen mr-1"></i>${heroArticle.author}</span>
+                                <span class="text-brand-red font-semibold group-hover:translate-x-1 transition flex items-center">
+                                    閱讀全文 <i class="fa-solid fa-chevron-right ml-1 text-[10px]"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            } else {
+                heroSection.classList.add('hidden');
+            }
+
+            // 主文章列表渲染
+            const mainList = document.getElementById('main-articles-list');
+            
+            if (filtered.length === 0) {
+                mainList.innerHTML = `<div class="bg-white p-12 text-center rounded-lg border text-gray-500">查無相關新聞或內容，請重新輸入關鍵字。</div>`;
+                return;
+            }
+
+            mainList.innerHTML = filtered.map(item => `
+                <article onclick="openArticle(${item.id})" class="bg-white rounded-lg p-4 md:p-5 border border-gray-200 shadow-sm hover:shadow-md transition cursor-pointer flex flex-col sm:flex-row gap-4 sm:gap-6 group">
+                    <div class="sm:w-1/3 h-48 sm:h-36 shrink-0 rounded-md overflow-hidden">
+                        <img src="${item.image}" alt="${item.title}" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
+                    </div>
+                    <div class="sm:w-2/3 flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center gap-2 mb-2">
+                                <span class="text-xs font-bold text-brand-red bg-red-50 px-2 py-0.5 rounded border border-red-100">${item.category}</span>
+                                <span class="text-xs text-gray-400">${item.date}</span>
+                            </div>
+                            <h3 class="text-lg md:text-xl font-bold text-gray-900 group-hover:text-brand-red transition line-clamp-2 mb-2">
+                                ${item.title}
+                            </h3>
+                            <p class="text-xs md:text-sm text-gray-600 line-clamp-2 mb-3">
+                                ${item.summary}
+                            </p>
+                        </div>
+                        <div class="flex items-center justify-between text-xs text-gray-500">
+                            <span><i class="fa-solid fa-user-pen mr-1"></i>${item.author}</span>
+                            <div class="flex gap-1">
+                                ${item.tags.map(t => `<span class="bg-gray-100 text-gray-600 px-1.5 py-0.5 rounded text-[10px]">#${t}</span>`).join('')}
+                            </div>
+                        </div>
+                    </div>
+                </article>
+            `).join('');
+        }
+
+        // 5. 側邊欄發燒新聞
+        function renderTrending() {
+            const sorted = [...articles].sort((a, b) => b.views - a.views);
+            const container = document.getElementById('trending-list');
+            container.innerHTML = sorted.slice(0, 4).map((item, index) => `
+                <li onclick="openArticle(${item.id})" class="flex items-start gap-3 cursor-pointer group py-1.5 border-b border-gray-100 last:border-0">
+                    <span class="text-lg font-black ${index === 0 ? 'text-brand-red' : 'text-gray-400'} w-5 text-center">${index + 1}</span>
+                    <div class="flex-1">
+                        <h4 class="text-xs md:text-sm font-semibold text-gray-800 group-hover:text-brand-red line-clamp-2 leading-snug">
+                            ${item.title}
+                        </h4>
+                        <span class="text-[10px] text-gray-400 mt-1 block">${item.views.toLocaleString()} 次閱讀</span>
+                    </div>
+                </li>
+            `).join('');
+        }
+
+        // 6. 熱門標籤雲
+        function renderTagCloud() {
+            const allTags = [...new Set(articles.flatMap(a => a.tags))];
+            const container = document.getElementById('tag-cloud');
+            container.innerHTML = allTags.map(tag => `
+                <button onclick="filterCategory('${tag}')" class="text-xs bg-gray-100 hover:bg-brand-red hover:text-white text-gray-700 px-2.5 py-1 rounded-full border border-gray-200 transition">
+                    #${tag}
+                </button>
+            `).join('');
+        }
+
+        // 分類切換
+        function filterCategory(cat) {
+            currentCategory = cat;
+            searchQuery = '';
+            document.getElementById('search-input-desktop').value = '';
+            document.getElementById('search-input-mobile').value = '';
+            document.getElementById('search-status').classList.add('hidden');
+            renderCategoryNav();
+            renderArticles();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // 關鍵字搜尋
+        function handleSearch(val) {
+            searchQuery = val;
+            const statusBox = document.getElementById('search-status');
+            const keywordText = document.getElementById('search-keyword');
+
+            if (val.trim() !== '') {
+                statusBox.classList.remove('hidden');
+                keywordText.innerText = val;
+            } else {
+                statusBox.classList.add('hidden');
+            }
+            renderArticles();
+        }
+
+        function clearSearch() {
+            handleSearch('');
+            document.getElementById('search-input-desktop').value = '';
+            document.getElementById('search-input-mobile').value = '';
+        }
+
+        // 打開單篇文章頁面
+        function openArticle(id) {
+            const article = articles.find(a => a.id === id);
+            if (!article) return;
+
+            document.getElementById('news-list-view').classList.add('hidden');
+            const detailView = document.getElementById('single-article-view');
+            detailView.classList.remove('hidden');
+
+            document.getElementById('article-detail-content').innerHTML = `
+                <div class="mb-4 flex items-center gap-2">
+                    <span class="bg-brand-red text-white text-xs font-bold px-2.5 py-1 rounded">${article.category}</span>
+                    <span class="text-xs text-gray-500">${article.date}</span>
+                </div>
+                <h1 class="text-2xl md:text-4xl font-extrabold text-gray-900 mb-4 leading-tight">${article.title}</h1>
+                <div class="flex items-center justify-between text-xs md:text-sm text-gray-600 pb-4 mb-6 border-b border-gray-200">
+                    <div class="flex items-center space-x-2">
+                        <i class="fa-solid fa-user-circle text-gray-400 text-lg"></i>
+                        <span class="font-semibold text-gray-800">${article.author}</span>
+                    </div>
+                    <div>點閱數：${article.views.toLocaleString()}</div>
+                </div>
+                <div class="mb-6 rounded-lg overflow-hidden max-h-[450px]">
+                    <img src="${article.image}" alt="${article.title}" class="w-full h-full object-cover">
+                </div>
+                <div class="prose max-w-none text-gray-800 text-base md:text-lg leading-relaxed space-y-4">
+                    ${article.content}
+                </div>
+                <div class="mt-8 pt-4 border-t border-gray-200 flex flex-wrap gap-2">
+                    <span class="text-xs font-bold text-gray-500 flex items-center mr-2"><i class="fa-solid fa-tags mr-1"></i>本文標籤：</span>
+                    ${article.tags.map(t => `<button onclick="closeArticle(); filterCategory('${t}');" class="bg-gray-100 hover:bg-gray-200 text-gray-700 text-xs px-2.5 py-1 rounded-full">#${t}</button>`).join('')}
+                </div>
+            `;
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // 關閉文章頁面，回到列表
+        function closeArticle() {
+            document.getElementById('single-article-view').classList.add('hidden');
+            document.getElementById('news-list-view').classList.remove('hidden');
+        }
+    </script>
 </body>
 </html>
